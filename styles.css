@@ -12,7 +12,7 @@ body {
   overflow: hidden;
 }
 
-/* Fire Animation Container */
+/* Fire Container */
 #fire-container {
   position: absolute;
   top: 0;
@@ -26,15 +26,35 @@ body {
   z-index: 10;
 }
 
-#fire-animation {
-  width: 200px;
-  height: 200px;
-  background: url('fire.gif') no-repeat center center;
-  background-size: cover;
-  animation: burnDown 2s forwards;
+/* Fire Animation */
+.fire {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(45deg, #ff8a00, #ff2a00, #ff8a00);
+  border-radius: 50%;
+  position: absolute;
+  animation: burn 2s ease-in-out forwards;
 }
 
-@keyframes burnDown {
+.fire:nth-child(1) {
+  top: 20%;
+  left: 40%;
+  animation-delay: 0s;
+}
+
+.fire:nth-child(2) {
+  top: 30%;
+  left: 50%;
+  animation-delay: 0.5s;
+}
+
+.fire:nth-child(3) {
+  top: 25%;
+  left: 60%;
+  animation-delay: 1s;
+}
+
+@keyframes burn {
   0% {
     transform: scale(1);
     opacity: 1;
