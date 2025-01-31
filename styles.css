@@ -12,68 +12,14 @@ body {
   overflow: hidden;
 }
 
-/* Fire Container */
-#fire-container {
+/* Canvas */
+#fire {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #1a1a1a;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 10;
-}
-
-/* Flame Animation */
-.flame {
-  width: 60px;
-  height: 120px;
-  background: linear-gradient(to bottom, #ff8a00, #ff2a00, #ff8a00);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  position: absolute;
-  animation: flicker 1.5s infinite ease-in-out, burnDown 2s forwards;
-}
-
-.flame:nth-child(1) {
-  top: 20%;
-  left: 40%;
-  animation-delay: 0s;
-}
-
-.flame:nth-child(2) {
-  top: 30%;
-  left: 50%;
-  animation-delay: 0.5s;
-}
-
-.flame:nth-child(3) {
-  top: 25%;
-  left: 60%;
-  animation-delay: 1s;
-}
-
-/* Flicker Animation */
-@keyframes flicker {
-  0%, 100% {
-    transform: scaleY(1) translateY(0);
-  }
-  50% {
-    transform: scaleY(1.1) translateY(-10px);
-  }
-}
-
-/* Burn Down Animation */
-@keyframes burnDown {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0.1);
-    opacity: 0;
-  }
 }
 
 /* Link Container */
@@ -81,6 +27,11 @@ body {
   text-align: center;
   opacity: 0;
   transition: opacity 1s ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
 }
 
 #link-container.visible {
