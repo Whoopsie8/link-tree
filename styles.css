@@ -26,35 +26,46 @@ body {
   z-index: 10;
 }
 
-/* Fire Animation */
-.fire {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(45deg, #ff8a00, #ff2a00, #ff8a00);
-  border-radius: 50%;
+/* Flame Animation */
+.flame {
+  width: 60px;
+  height: 120px;
+  background: linear-gradient(to bottom, #ff8a00, #ff2a00, #ff8a00);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
   position: absolute;
-  animation: burn 2s ease-in-out forwards;
+  animation: flicker 1.5s infinite ease-in-out, burnDown 2s forwards;
 }
 
-.fire:nth-child(1) {
+.flame:nth-child(1) {
   top: 20%;
   left: 40%;
   animation-delay: 0s;
 }
 
-.fire:nth-child(2) {
+.flame:nth-child(2) {
   top: 30%;
   left: 50%;
   animation-delay: 0.5s;
 }
 
-.fire:nth-child(3) {
+.flame:nth-child(3) {
   top: 25%;
   left: 60%;
   animation-delay: 1s;
 }
 
-@keyframes burn {
+/* Flicker Animation */
+@keyframes flicker {
+  0%, 100% {
+    transform: scaleY(1) translateY(0);
+  }
+  50% {
+    transform: scaleY(1.1) translateY(-10px);
+  }
+}
+
+/* Burn Down Animation */
+@keyframes burnDown {
   0% {
     transform: scale(1);
     opacity: 1;
