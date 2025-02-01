@@ -9,8 +9,8 @@ var Fire = function () {
   this.aSpark2 = [];
 
   this.center = {
-    x: this.canvas.width * 0.5,
-    y: this.canvas.height * 0.75,
+    x: this.canvas.width * 0.5, // Center X
+    y: this.canvas.height * 0.9, // Bottom center Y
   };
 
   this.init();
@@ -163,7 +163,7 @@ Flame.prototype.update = function () {
   this.lx = this.x;
   this.ly = this.y;
 
-  // Move toward the target position
+  // Move toward the target position (bottom center)
   const dx = this.targetPos.x - this.x;
   const dy = this.targetPos.y - this.y;
   const angle = Math.atan2(dy, dx);
