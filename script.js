@@ -9,17 +9,15 @@ var Fire = function () {
   this.aSpark2 = [];
 
   this.center = {
-    x: this.canvas.width * 0.5, // Center X
-    y: this.canvas.height * 0.9, // Bottom center Y
+    x: this.canvas.width * 0.5,
+    y: this.canvas.height * 0.9,
   };
 
   this.init();
 };
 
 Fire.prototype.init = function () {
-  this.imageObj = new Image();
-  this.imageObj.src = 'https://assets.codepen.io/13471/silver-glitter-background.png';
-  this.pattern = this.ctx.createPattern(this.imageObj, 'repeat');
+  // No glitter background
 };
 
 Fire.prototype.run = function () {
@@ -40,34 +38,25 @@ Fire.prototype.stop = function () {
 
 Fire.prototype.update = function () {
   // Spawn flames around the border
-  if (this.aFires.length < 100) {
+  if (this.aFires.length < 300) {
     const side = Math.floor(rand(0, 4)); // 0: top, 1: right, 2: bottom, 3: left
     let x, y;
 
     switch (side) {
-      case 0: // Top
-        x = rand(0, this.canvas.width);
-        y = 0;
-        break;
-      case 1: // Right
-        x = this.canvas.width;
-        y = rand(0, this.canvas.height);
-        break;
-      case 2: // Bottom
-        x = rand(0, this.canvas.width);
-        y = this.canvas.height;
-        break;
-      case 3: // Left
-        x = 0;
-        y = rand(0, this.canvas.height);
-        break;
+      case 0: x = rand(0, this.canvas.width); y = 0; break;
+      case 1: x = this.canvas.width; y = rand(0, this.canvas.height); break;
+      case 2: x = rand(0, this.canvas.width); y = this.canvas.height; break;
+      case 3: x = 0; y = rand(0, this.canvas.height); break;
     }
 
     this.aFires.push(new Flame({ x, y }, this.center));
   }
 
-  this.aSpark.push(new Spark(this.center));
-  this.aSpark2.push(new Spark(this.center));
+  // Add more sparks for intensity
+  for (let i = 0; i < 10; i++) {
+    this.aSpark.push(new Spark(this.center));
+    this.aSpark2.push(new Spark(this.center));
+  }
 
   for (let i = this.aFires.length - 1; i >= 0; i--) {
     if (this.aFires[i].alive) this.aFires[i].update();
@@ -110,13 +99,8 @@ Fire.prototype.draw = function () {
 
 Fire.prototype.clearCanvas = function () {
   this.ctx.globalCompositeOperation = 'source-over';
-  this.ctx.fillStyle = 'rgba(15, 5, 2, 1)';
+  this.ctx.fillStyle = 'rgba(15, 5, 2, 1)'; // Dark red background
   this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
-  this.ctx.globalCompositeOperation = 'lighter';
-  this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
-  this.ctx.fillStyle = this.pattern;
-  this.ctx.fill();
 };
 
 Fire.prototype.drawHalo = function () {
@@ -131,9 +115,7 @@ Fire.prototype.drawHalo = function () {
     0
   );
   this.grd.addColorStop(0, 'transparent');
-  this.grd.addColorStop(1, 'rgb(50, 2, 0)');
-  this.ctx.beginPath();
-  this.ctx.arc(this.center.x, this.center.y - 100, r, 0, 2 * Math.PI);
+  this.grd.addColorStop(1, 'rgba(150, 40, 0, 0.8)'); // Deep red halo
   this.ctx.fillStyle = this.grd;
   this.ctx.fill();
 };
@@ -147,15 +129,15 @@ var Flame = function (startPos, targetPos) {
   this.ly = this.y;
   this.vy = rand(1, 3);
   this.vx = rand(-1, 1);
-  this.r = rand(30, 40);
+  this.r = rand(40, 60); // Larger flames
   this.life = rand(2, 7);
   this.alive = true;
   this.c = {
-    h: Math.floor(rand(2, 40)),
+    h: Math.floor(rand(10, 30)), // Warmer hue
     s: 100,
-    l: rand(80, 100),
+    l: rand(90, 100), // Brighter flames
     a: 0,
-    ta: rand(0.8, 0.9),
+    ta: rand(0.9, 1), // Higher opacity
   };
 };
 
@@ -168,13 +150,19 @@ Flame.prototype.update = function () {
   const dy = this.targetPos.y - this.y;
   const angle = Math.atan2(dy, dx);
 
-  this.x += Math.cos(angle) * 2;
-  this.y += Math.sin(angle) * 2;
+  this.x += Math.cos(angle) * 4; // Faster movement
+  this.y += Math.sin(angle) * 4;
 
-  this.r -= 0.3;
+  // Stop moving once close to the center
+  if (Math.abs(this.x - this.targetPos.x) < 10 && Math.abs(this.y - this.targetPos.y) < 10) {
+    this.x = this.targetPos.x;
+    this.y = this.targetPos.y;
+  }
+
+  this.r -= 0.15; // Slower shrinking
   if (this.r <= 0) this.r = 0;
 
-  this.life -= 0.12;
+  this.life -= 0.1;
 
   if (this.life <= 0) {
     this.c.a -= 0.05;
@@ -284,9 +272,8 @@ var init = function () {
   oCanvas = new Fire();
   oCanvas.start();
 
-  // Stop the fire animation after 5 seconds and reveal the links
+  // Reveal the links after 5 seconds
   setTimeout(() => {
-    oCanvas.stop();
     document.getElementById('link-container').classList.remove('hidden');
     document.getElementById('link-container').classList.add('visible');
   }, 5000);

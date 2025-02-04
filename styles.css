@@ -2,8 +2,8 @@
 body {
   margin: 0;
   padding: 0;
-  background: #1a1a1a;
-  color: #ff79c6;
+  background: #1a1a1a; /* Dark background */
+  color: #ff79c6; /* Pink text */
   font-family: 'Courier New', Courier, monospace;
   display: flex;
   justify-content: center;
@@ -22,11 +22,34 @@ body {
   z-index: 10;
 }
 
+/* Title - Goddess Illyria */
+#title {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+  font-size: 3em;
+  color: #ff79c6;
+  text-shadow: 0 0 10px #ff79c6, 0 0 20px #ff79c6, 0 0 30px #ff79c6;
+  z-index: 20;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px #ff79c6, 0 0 20px #ff79c6, 0 0 30px #ff79c6;
+  }
+  100% {
+    text-shadow: 0 0 20px #ff79c6, 0 0 40px #ff79c6, 0 0 60px #ff79c6;
+  }
+}
+
 /* Link Container */
 #link-container {
   text-align: center;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+  opacity: 0; /* Start hidden */
+  transition: opacity 1s ease-in-out; /* Smooth fade-in */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -35,26 +58,104 @@ body {
 }
 
 #link-container.visible {
-  opacity: 1;
+  opacity: 1; /* Fully visible */
 }
 
 .link {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 15px 0;
   padding: 10px 20px;
-  background: #282a36;
-  color: #ff79c6;
+  background: #282a36; /* Dark background for links */
+  color: #ff79c6; /* Bright pink text */
   text-decoration: none;
   border-radius: 5px;
   font-size: 1.2em;
+  font-family: 'Courier New', Courier, monospace; /* Gothic font */
   transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  position: relative; /* Required for pseudo-element */
+}
+
+.link i {
+  margin-right: 10px; /* Space between icon and text */
 }
 
 .link:hover {
-  background: #44475a;
-  transform: scale(1.1);
+  background: #44475a; /* Lighter background on hover */
+  color: #ff79c6; /* Keep pink text on hover */
+  transform: scale(1.1); /* Slight zoom effect */
 }
 
-.hidden {
-  display: none;
+/* Shake Effect */
+.link:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  animation: shake 0.5s ease-in-out; /* Apply shake animation */
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
+
+/* Add a subtle glow to the links */
+.link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(255, 121, 198, 0.5); /* Pink glow */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.link:hover::after {
+  opacity: 1; /* Show glow on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #title {
+    font-size: 2em; /* Smaller title for mobile */
+  }
+
+  .link {
+    font-size: 1em; /* Smaller font size for mobile */
+    padding: 8px 16px; /* Smaller padding for mobile */
+  }
+
+  #link-container {
+    width: 90%; /* Make container fit smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  #title {
+    font-size: 1.5em; /* Even smaller title for very small screens */
+  }
+
+  .link {
+    font-size: 0.9em; /* Even smaller font size for very small screens */
+    padding: 6px 12px; /* Smaller padding for very small screens */
+  }
 }
