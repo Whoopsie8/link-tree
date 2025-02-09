@@ -73,12 +73,12 @@ body {
   border-radius: 5px;
   font-size: 1.2em;
   font-family: 'Courier New', Courier, monospace; /* Gothic font */
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow */
   position: relative; /* Required for pseudo-element */
 }
 
-.link i {
+.link i, .link iconify-icon {
   margin-right: 10px; /* Space between icon and text */
 }
 
@@ -86,6 +86,7 @@ body {
   background: #44475a; /* Lighter background on hover */
   color: #ff79c6; /* Keep pink text on hover */
   transform: scale(1.1); /* Slight zoom effect */
+  text-shadow: 0 0 10px #ff79c6, 0 0 20px #ff79c6; /* Enhanced glow */
 }
 
 /* Shake Effect */

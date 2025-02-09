@@ -272,11 +272,11 @@ var init = function () {
   oCanvas = new Fire();
   oCanvas.start();
 
-  // Reveal the links after 5 seconds
+  // Reveal the links after 3 seconds (faster fade-in)
   setTimeout(() => {
     document.getElementById('link-container').classList.remove('hidden');
     document.getElementById('link-container').classList.add('visible');
-  }, 5000);
+  }, 3000); // Changed from 5000 to 3000
 };
 
 window.onload = init;
