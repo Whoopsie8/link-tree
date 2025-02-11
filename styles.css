@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #1a1a1a; /* Dark background */
+  background: #1a1a1a; /* Fallback background */
   color: #ff79c6; /* Pink text */
   font-family: 'Courier New', Courier, monospace;
   display: flex;
@@ -10,6 +10,19 @@ body {
   align-items: center;
   height: 100vh;
   overflow: hidden;
+}
+
+/* Background Image */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('image00006.png') no-repeat center center/cover;
+  opacity: 0.8; /* Slightly darker overlay */
+  z-index: -1;
 }
 
 /* Canvas */
@@ -45,6 +58,16 @@ body {
   }
 }
 
+/* Subheader - Offerings */
+#subheader {
+  font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+  font-size: 1.2em; /* Same size as link text */
+  color: #ff79c6;
+  text-shadow: 0 0 10px #ff79c6, 0 0 20px #ff79c6;
+  margin: 20px 0 10px 0; /* Spacing */
+  text-align: center;
+}
+
 /* Link Container */
 #link-container {
   text-align: center;
@@ -78,8 +101,10 @@ body {
   position: relative; /* Required for pseudo-element */
 }
 
-.link i, .link iconify-icon {
+.link i, .link img.icon, .link iconify-icon {
   margin-right: 10px; /* Space between icon and text */
+  width: 24px; /* Set icon size */
+  height: 24px; /* Set icon size */
 }
 
 .link:hover {
@@ -140,6 +165,10 @@ body {
     font-size: 2em; /* Smaller title for mobile */
   }
 
+  #subheader {
+    font-size: 1em; /* Smaller subheader for mobile */
+  }
+
   .link {
     font-size: 1em; /* Smaller font size for mobile */
     padding: 8px 16px; /* Smaller padding for mobile */
@@ -153,6 +182,10 @@ body {
 @media (max-width: 480px) {
   #title {
     font-size: 1.5em; /* Even smaller title for very small screens */
+  }
+
+  #subheader {
+    font-size: 0.9em; /* Even smaller subheader for very small screens */
   }
 
   .link {
