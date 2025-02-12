@@ -13,6 +13,13 @@ var Fire = function () {
     y: this.canvas.height * 0.9,
   };
 
+  // Load the background image
+  this.backgroundImage = new Image();
+  this.backgroundImage.src = 'goddessillyria_lillith.png';
+  this.backgroundImage.onload = () => {
+    this.drawBackground();
+  };
+
   this.init();
 };
 
@@ -34,6 +41,22 @@ Fire.prototype.start = function () {
 
 Fire.prototype.stop = function () {
   this.bRuning = false;
+};
+
+Fire.prototype.drawBackground = function () {
+  const img = this.backgroundImage;
+  const canvas = this.canvas;
+
+  // Define the desired width and height for the background image
+  const desiredWidth = canvas.width * 0.8; // Reduce image size to 80% of canvas width
+  const desiredHeight = img.height * (desiredWidth / img.width); // Maintain aspect ratio
+
+  // Calculate the position to center the image
+  const offsetX = (canvas.width - desiredWidth) / 2;
+  const offsetY = (canvas.height - desiredHeight) / 2;
+
+  // Draw the image centered and scaled down
+  this.ctx.drawImage(img, offsetX, offsetY, desiredWidth, desiredHeight);
 };
 
 Fire.prototype.update = function () {
@@ -75,10 +98,14 @@ Fire.prototype.update = function () {
 };
 
 Fire.prototype.draw = function () {
-  this.clearCanvas();
-  this.drawHalo();
+  // Clear the canvas
+  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-  this.ctx.globalCompositeOperation = 'overlay';
+  // Draw the background image
+  this.drawBackground();
+
+  // Draw flames and sparks
+  this.ctx.globalCompositeOperation = 'lighter'; // Ensure flames are bright and visible
 
   for (let i = this.aFires.length - 1; i >= 0; i--) {
     this.aFires[i].draw(this.ctx);
@@ -95,12 +122,6 @@ Fire.prototype.draw = function () {
   for (let i = this.aSpark2.length - 1; i >= 0; i--) {
     this.aSpark2[i].draw(this.ctx);
   }
-};
-
-Fire.prototype.clearCanvas = function () {
-  this.ctx.globalCompositeOperation = 'source-over';
-  this.ctx.fillStyle = 'rgba(15, 5, 2, 1)'; // Dark red background
-  this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 };
 
 Fire.prototype.drawHalo = function () {
